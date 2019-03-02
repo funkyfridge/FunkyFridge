@@ -1,12 +1,21 @@
 package com.funkyapps.funkyfridge
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.view.SurfaceHolder
+import android.view.SurfaceView
 import android.view.View
 import android.widget.EditText
+import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.gms.vision.CameraSource
+import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
+import java.io.IOException
 
 class AddItem : AppCompatActivity() {
 
@@ -25,22 +34,22 @@ class AddItem : AppCompatActivity() {
             if (prodUPCCode == 0) {
 
             }
-
-            val intent = Intent(this, AddItem::class.java)
-            startActivity(intent)
         }
     }
 
-    val detector = BarcodeDetector.Builder(applicationContext())
-                                  .setBarcodeFormats(Barcode.DATA_MATRIX) | Barcode.QR_CODE)
-                                  .build()
-
     fun scanBarcode(view: View) {
+        val intent = Intent()
+        startActivityForResult(intent, 0)
+    }
 
-        val frame = Frame.Builder().setBitmap(myBitmap).build()
-        barcodes = detector.detect(frame)
-
-        val thisCode = barcodes.valueAt(0)
-        prodUPCCode = thisCode.rawValue
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Int {
+        if (requestCode == 0) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                val barcode = data.getParcelableExtra<Barcode>("barcode")
+                return barcode.displayValue.toInt()
+            }
+        }
+        // No barcode found
+        return 0;
     }
 }
