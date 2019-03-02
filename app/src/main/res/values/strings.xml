@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FunkyFridge</string>
+    <string name="sample_item">Sample Item</string>
+    <string name="delete">delete</string>
 </resources>
