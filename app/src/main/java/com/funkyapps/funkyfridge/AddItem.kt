@@ -5,10 +5,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.gms.vision.barcode.Barcode
 
 class AddItem : AppCompatActivity() {
 
-    val prodUPCCode = 0
+    var prodUPCCode = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,14 +26,29 @@ class AddItem : AppCompatActivity() {
 
             }
 
-            val intent = Intent(this, AddItem::class.java)
-            startActivity(intent)
+            // TODO: add prodUPCCode to database
         }
     }
 
     fun scanBarcode(view: View) {
+        val intent = Intent()
+        startActivityForResult(intent, 0)
+    }
 
-
-        prodUPCCode =
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 0) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+                    val barcode = data.getParcelableExtra<Barcode>("barcode")
+                    prodUPCCode = barcode.displayValue.toInt()
+                }
+                else {
+                    prodUPCCode = 0
+                }
+            }
+        }
+        else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
     }
 }
