@@ -16,6 +16,7 @@ import org.w3c.dom.Text
 import android.content.Intent
 import android.opengl.Visibility
 import android.support.constraint.ConstraintLayout
+import android.support.v7.view.menu.MenuView
 import android.view.MenuItem
 import android.widget.*
 import java.util.*
@@ -57,7 +58,10 @@ class MyAdapter(private val myDataset: MutableList<FoodItem>, val context : Cont
 
     var isExpanded : MutableList<Boolean>
 
-    class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    open class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+
+    }
+    class ItemViewHolder(itemView : View) : MyViewHolder(itemView){
         var button : ConstraintLayout = itemView.findViewById(R.id.dropdownLayout)
         var proteinText : TextView = itemView.findViewById(R.id.proteinText)
         var sugarText : TextView = itemView.findViewById(R.id.sugarsText)
@@ -65,6 +69,9 @@ class MyAdapter(private val myDataset: MutableList<FoodItem>, val context : Cont
         var fatText : TextView = itemView.findViewById(R.id.fatsText)
         var caloriesText : TextView = itemView.findViewById(R.id.caloriesText)
         var textView : TextView = itemView.findViewById(R.id.dropdownTextview)
+    }
+    class TitleViewHolder(itemView : View) : MyViewHolder(itemView) {
+
     }
 
     init{
@@ -74,55 +81,76 @@ class MyAdapter(private val myDataset: MutableList<FoodItem>, val context : Cont
         }
     }
 
+    override fun getItemViewType(position: Int): Int {
+        // Just as an example, return 0 or 2 depending on position
+        // Note that unlike in ListView adapters, types don't have to be contiguous
+        return if (position == 0)
+            0
+        else
+            1
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): MyAdapter.MyViewHolder {
 
-        val dropdownView = LayoutInflater.from(parent.context)
+        if(viewType==1){
+            val dropdownView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.dropdown_item, parent, false)
-
-        return MyViewHolder(dropdownView)
+            return ItemViewHolder(dropdownView)
+            }
+        else{
+            val headerView = LayoutInflater.from(parent.context)
+                .inflate(R.layout.title_item, parent, false)
+            return TitleViewHolder(headerView)
+        }
     }
 
     // Replace contents of view, invoked by layout manager
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        var buttonText : String = myDataset[holder.adapterPosition].itemName
-        var date : String = myDataset[holder.adapterPosition].expDate.substring(5,7) + "/" +
-                myDataset[holder.adapterPosition].expDate.substring(8,10) + "/" + myDataset[holder.adapterPosition].expDate.substring(0,4)
+    override fun onBindViewHolder(bigHolder: MyViewHolder, position: Int) {
+        lateinit var holder : ItemViewHolder
+        if(bigHolder.adapterPosition!=0)
+            holder = bigHolder as ItemViewHolder
+        else
+            return
+
+        var buttonText : String = myDataset[holder.adapterPosition-1].itemName
+        var date : String = myDataset[holder.adapterPosition-1].expDate.substring(5,7) + "/" +
+                myDataset[holder.adapterPosition-1].expDate.substring(8,10) + "/" + myDataset[holder.adapterPosition-1].expDate.substring(0,4)
 
         buttonText += " (expires on " + date + ")"
 
-        if(isExpanded.size > 0 && isExpanded[holder.adapterPosition]){
+        if(isExpanded.size > 0 && isExpanded[holder.adapterPosition-1]){
             holder.proteinText.visibility = View.VISIBLE
             holder.sugarText.visibility = View.VISIBLE
             holder.carbText.visibility = View.VISIBLE
             holder.fatText.visibility = View.VISIBLE
             holder.caloriesText.visibility = View.VISIBLE
-            holder.proteinText.text = "Proteins: " + myDataset[holder.adapterPosition].proteins
-            holder.carbText.text = "Carbs: " + myDataset[holder.adapterPosition].carbs
-            holder.sugarText.text = "Sugars: " + myDataset[holder.adapterPosition].sugars
-            holder.fatText.text = "Fats: " + myDataset[holder.adapterPosition].fats
-            holder.caloriesText.text = "Calories: " + myDataset[holder.adapterPosition].calories
+            holder.proteinText.text = "Proteins: " + myDataset[holder.adapterPosition-1].proteins
+            holder.carbText.text = "Carbs: " + myDataset[holder.adapterPosition-1].carbs
+            holder.sugarText.text = "Sugars: " + myDataset[holder.adapterPosition-1].sugars
+            holder.fatText.text = "Fats: " + myDataset[holder.adapterPosition-1].fats
+            holder.caloriesText.text = "Calories: " + myDataset[holder.adapterPosition-1].calories
         }
 
         holder.textView.text = buttonText
 
         holder.button.setOnClickListener {
-            if(isExpanded.size > 0 && !isExpanded[holder.adapterPosition]){
-                isExpanded[holder.adapterPosition] = true
+            if(isExpanded.size > 0 && !isExpanded[holder.adapterPosition-1]){
+                isExpanded[holder.adapterPosition-1] = true
                 holder.proteinText.visibility = View.VISIBLE
                 holder.sugarText.visibility = View.VISIBLE
                 holder.carbText.visibility = View.VISIBLE
                 holder.fatText.visibility = View.VISIBLE
                 holder.caloriesText.visibility = View.VISIBLE
-                holder.proteinText.text = "Proteins: " + myDataset[holder.adapterPosition].proteins
-                holder.carbText.text = "Carbs: " + myDataset[holder.adapterPosition].carbs
-                holder.sugarText.text = "Sugars: " + myDataset[holder.adapterPosition].sugars
-                holder.fatText.text = "Fats: " + myDataset[holder.adapterPosition].fats
-                holder.caloriesText.text = "Calories: " + myDataset[holder.adapterPosition].calories
+                holder.proteinText.text = "Proteins: " + myDataset[holder.adapterPosition-1].proteins
+                holder.carbText.text = "Carbs: " + myDataset[holder.adapterPosition-1].carbs
+                holder.sugarText.text = "Sugars: " + myDataset[holder.adapterPosition-1].sugars
+                holder.fatText.text = "Fats: " + myDataset[holder.adapterPosition-1].fats
+                holder.caloriesText.text = "Calories: " + myDataset[holder.adapterPosition-1].calories
             }
             else{
                 if(isExpanded.size > 0)
-                    isExpanded[holder.adapterPosition] = false
+                    isExpanded[holder.adapterPosition-1] = false
                 holder.proteinText.visibility = View.GONE
                 holder.sugarText.visibility = View.GONE
                 holder.carbText.visibility = View.GONE
@@ -157,7 +185,7 @@ class MyAdapter(private val myDataset: MutableList<FoodItem>, val context : Cont
                                 return@OnClickListener
                             }
                             else {
-                                myDataset[holder.adapterPosition].itemName = input.text.toString()
+                                myDataset[holder.adapterPosition-1].itemName = input.text.toString()
                                 notifyDataSetChanged()
                                 alert.cancel()
                             }
@@ -182,16 +210,16 @@ class MyAdapter(private val myDataset: MutableList<FoodItem>, val context : Cont
                         newDate.set(thisYear, thisMonth, thisDay)
                         val formatter = SimpleDateFormat("yyyy-MM-dd")
                         val currentDate = formatter.format(newDate.time)
-                        myDataset[holder.adapterPosition].expDate = currentDate // setting new date
-                        repo.update(myDataset[holder.adapterPosition])
+                        myDataset[holder.adapterPosition-1].expDate = currentDate // setting new date
+                        repo.update(myDataset[holder.adapterPosition-1])
                         notifyDataSetChanged()
                     }, year, month, day)
                     dpd.show()
                 }
                 else if (temp.compareTo("Delete") == 0) {
-                    repo.delete(myDataset[holder.adapterPosition])
-                    isExpanded.removeAt(holder.adapterPosition)
-                    myDataset.removeAt(holder.adapterPosition)
+                    repo.delete(myDataset[holder.adapterPosition-1])
+                    isExpanded.removeAt(holder.adapterPosition-1)
+                    myDataset.removeAt(holder.adapterPosition-1)
                     notifyDataSetChanged()
                     return@OnMenuItemClickListener true
                 }
@@ -203,6 +231,6 @@ class MyAdapter(private val myDataset: MutableList<FoodItem>, val context : Cont
     }
 
     // return size of dataset (invoked by layout manager)
-    override fun getItemCount() = myDataset.size
+    override fun getItemCount() = myDataset.size+1
 
 }

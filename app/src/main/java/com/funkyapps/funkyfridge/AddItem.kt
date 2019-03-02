@@ -29,7 +29,7 @@ class AddItem : AppCompatActivity() {
             // TODO: add prodUPCCode to database
         }
     }
-
+    /*
     fun scanBarcode(view: View) {
         val intent = Intent()
         startActivityForResult(intent, 0)
@@ -51,4 +51,5 @@ class AddItem : AppCompatActivity() {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
+    */
 }
