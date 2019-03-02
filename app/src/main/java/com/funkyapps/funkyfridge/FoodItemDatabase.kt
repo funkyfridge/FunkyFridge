@@ -50,9 +50,9 @@ public abstract class FoodItemDatabase : RoomDatabase() {
             fun populateDatabase(fItemDAO: FoodItemDAO) {
                 fItemDAO.deleteAllFoodItems()
 
-                var foodItem = FoodItem("Milk", "Milk 1", 1, "2019-03-02 13:52:33.213",1,1,1,1,1)
+                var foodItem = FoodItem("Milk", "Milk 1", 1, "2019-03-02",1,1,1,1,1)
                 fItemDAO.insert(foodItem)
-                foodItem = FoodItem("Milk", "Milk 2", 1, "2019-03-02 13:53:45.213",1,1,1,1,1)
+                foodItem = FoodItem("Milk", "Milk 2", 1, "2019-03-10",1,1,1,1,1)
                 fItemDAO.insert(foodItem)
             }
         }

@@ -19,7 +19,7 @@ interface FoodItemDAO {
     fun getFoodItem(id : Int) : FoodItem
 
     @Query("SELECT * from food_item_table")
-    fun getAllFoodItems() : List<FoodItem>
+    fun getAllFoodItems() : MutableList<FoodItem>
 
     @Query("DELETE from food_item_table")
     fun deleteAllFoodItems()

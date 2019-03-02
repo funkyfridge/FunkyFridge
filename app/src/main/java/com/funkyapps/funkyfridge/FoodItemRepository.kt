@@ -36,7 +36,7 @@ class FoodItemRepository(application : Application) : AndroidViewModel(applicati
         fItemDAO.deleteAllFoodItems()
     }
 
-    fun getAllFoodItems(): List<FoodItem> {
+    fun getAllFoodItems(): MutableList<FoodItem> {
         val foodItems = ArrayList<FoodItem>()
         try {
             return getAllModsAsyncTask(fItemDAO).execute().get()
@@ -51,10 +51,10 @@ class FoodItemRepository(application : Application) : AndroidViewModel(applicati
 
     private class getAllModsAsyncTask internal constructor(
         private val mAsyncFoodDao: FoodItemDAO
-        ) : AsyncTask<Void, Void, List<FoodItem>>() {
-        private val mods: List<FoodItem>? = null
+        ) : AsyncTask<Void, Void, MutableList<FoodItem>>() {
+        private val mods: MutableList<FoodItem>? = null
 
-        override fun doInBackground(vararg params: Void): List<FoodItem> {
+        override fun doInBackground(vararg params: Void): MutableList<FoodItem> {
             return mAsyncFoodDao.getAllFoodItems()
         }
 

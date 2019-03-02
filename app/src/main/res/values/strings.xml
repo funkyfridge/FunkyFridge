@@ -3,4 +3,7 @@
     <string name="item_name">Product Name</string>
     <string name="expiration_date">Expiration Date</string>
     <string name="barcode_scan">Scan</string>
+    <string name="edit_name">Edit Name</string>
+    <string name="edit_date">Edit Expiration Date</string>
+    <string name="delete">Delete</string>
 </resources>
