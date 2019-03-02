@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import com.google.android.gms.vision.barcode.Barcode
+import com.google.android.gms.vision.barcode.BarcodeDetector
 
 class AddItem : AppCompatActivity() {
 
@@ -29,9 +31,16 @@ class AddItem : AppCompatActivity() {
         }
     }
 
+    val detector = BarcodeDetector.Builder(applicationContext())
+                                  .setBarcodeFormats(Barcode.DATA_MATRIX) | Barcode.QR_CODE)
+                                  .build()
+
     fun scanBarcode(view: View) {
 
+        val frame = Frame.Builder().setBitmap(myBitmap).build()
+        barcodes = detector.detect(frame)
 
-        prodUPCCode =
+        val thisCode = barcodes.valueAt(0)
+        prodUPCCode = thisCode.rawValue
     }
 }
