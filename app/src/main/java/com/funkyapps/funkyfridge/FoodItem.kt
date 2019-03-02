@@ -9,15 +9,15 @@ import java.sql.Date
 
 @Entity(tableName = "food_item_table")
 data class FoodItem(
-    @ColumnInfo(name = "product") val product : String = String(),
-    @ColumnInfo(name = "itemName") val itemName : String = String(),
-    @ColumnInfo(name = "UPCid") val UPCid : Int,
-    @ColumnInfo(name = "expDate") val expDate : String,
-    @ColumnInfo(name = "carbs") val carbs : Int,
-    @ColumnInfo(name = "proteins") val proteins : Int,
-    @ColumnInfo(name = "sugars") val sugars : Int,
-    @ColumnInfo(name = "fats") val fats : Int,
-    @ColumnInfo(name = "calories") val calories : Int
+    @ColumnInfo(name = "product") var product : String = String(),
+    @ColumnInfo(name = "itemName") var itemName : String = String(),
+    @ColumnInfo(name = "UPCid") var UPCid : Int,
+    @ColumnInfo(name = "expDate") var expDate : String,
+    @ColumnInfo(name = "carbs") var carbs : Int,
+    @ColumnInfo(name = "proteins") var proteins : Int,
+    @ColumnInfo(name = "sugars") var sugars : Int,
+    @ColumnInfo(name = "fats") var fats : Int,
+    @ColumnInfo(name = "calories") var calories : Int
     ){
     //Auto Generate the integer key id
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id")
