@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             adapter = viewAdapter
         }
 */
-        val fab: View = findViewById(R.id.floatingActionButton)
+        val fab: View = findViewById(R.id.fab_new_item)
         fab.setOnClickListener {
             val intent = Intent(this, AddItem::class.java)
             startActivity(intent)

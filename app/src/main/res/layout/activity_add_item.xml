@@ -9,10 +9,36 @@
 
     <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:inputType="textPersonName"
-            android:text="Name"
+            android:text="@string/item_name"
             android:ems="10"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp" android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/editText"/>
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
+            android:id="@+id/edit_item_name"
+            android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:hint="@string/item_name"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/edit_expiration_date"
+            android:text="@string/expiration_date" android:layout_marginEnd="8dp" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/edit_item_name" android:layout_marginStart="8dp"/>
+    <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true" app:srcCompat="@android:drawable/checkbox_on_background"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
+            android:id="@+id/fab_add" android:focusable="true"/>
+    <Button
+            android:text="@string/barcode_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/button_barcode_scan"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/edit_expiration_date"
+            android:onClick="scanBarcode"/>
 </android.support.constraint.ConstraintLayout>
