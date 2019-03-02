@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.funkyapps.funkyfridge.R.attr.layoutManager
+import com.funkyapps.funkyfridge.R
 import org.w3c.dom.Text
+import android.content.Intent
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+/*
         viewManager = LinearLayoutManager(this)
         viewAdapter = MyAdapter(myDataset)
 
@@ -27,9 +29,15 @@ class MainActivity : AppCompatActivity() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+*/
+        val fab: View = findViewById(R.id.floatingActionButton)
+        fab.setOnClickListener {
+            val intent = Intent(this, AddItem::class.java)
+            startActivity(intent)
+        }
     }
 }
-
+/*
 class MyAdapter(private val myDataset: Array<String>) :
         RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
@@ -60,3 +68,4 @@ class MyAdapter(private val myDataset: Array<String>) :
     override fun getItemCount() = myDataset.size
     }
 }
+*/
