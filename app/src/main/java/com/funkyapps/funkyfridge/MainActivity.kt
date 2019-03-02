@@ -2,61 +2,28 @@ package com.funkyapps.funkyfridge
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
-import com.funkyapps.funkyfridge.R.attr.layoutManager
-import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
-
+    private lateinit var foodItemRepo : FoodItemRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewManager = LinearLayoutManager(this)
-        viewAdapter = MyAdapter(myDataset)
+        foodItemRepo = FoodItemRepository(application)
 
-        recyclerView = findViewById<RecyclerView>(R.id.recycler_fridge_feed).apply {
-            layoutManager = viewManager
-            adapter = viewAdapter
+        val textView : TextView = findViewById(R.id.dbTextview)
+        val button : Button = findViewById(R.id.dbButton)
+
+        button.setOnClickListener {
+            var string : String = ""
+            val foodItems : List<FoodItem> = foodItemRepo.getAllFoodItems()
+            for(item in foodItems){
+                string += item.itemName + "\n"
+            }
+            textView.setText(string);
         }
-    }
-}
-
-class MyAdapter(private val myDataset: Array<String>) :
-        RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
-
-    class MyViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
-
-    override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): MyAdapter.MyViewHolder {
-
-        // creates new view, inflated from my_text_view
-        // TODO: inflate all views of layout
-        val textView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.my_text_view, parent, false) as TextView
-
-        //TODO: set view's size, margins, etc
-
-        return MyViewHolder(textView)
-    }
-
-    // Replace contents of view, invoked by layout manager
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        // TODO: get element from dataset
-        // TODO: replace contents of view with element
-
-        holder.textView.text = myDataset[position]
-    }
-
-    // return size of dataset (invoked by layout manager)
-    override fun getItemCount() = myDataset.size
     }
 }
