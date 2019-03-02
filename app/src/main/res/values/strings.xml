@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">FunkyFridge</string>
+<<<<<<< HEAD
     <string name="sample_item">Sample Item</string>
     <string name="delete">delete</string>
+=======
+    <string name="item_name">Product Name</string>
+    <string name="expiration_date">Expiration Date</string>
+    <string name="barcode_scan">Scan</string>
+    <string name="edit_name">Edit Name</string>
+    <string name="edit_date">Edit Expiration Date</string>
+    <string name="delete">Delete</string>
+>>>>>>> 7d843b022c6ca0528ce28597e4494f222360135f
 </resources>
