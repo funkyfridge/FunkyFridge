@@ -35,14 +35,20 @@ class AddItem : AppCompatActivity() {
         startActivityForResult(intent, 0)
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Int {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 0) {
             if (resultCode == CommonStatusCodes.SUCCESS) {
-                val barcode = data.getParcelableExtra<Barcode>("barcode")
-                prodUPCCode = barcode.displayValue.toInt()
+                if (data != null) {
+                    val barcode = data.getParcelableExtra<Barcode>("barcode")
+                    prodUPCCode = barcode.displayValue.toInt()
+                }
+                else {
+                    prodUPCCode = 0
+                }
             }
         }
-        // No barcode found
-        return 0;
+        else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
     }
 }
