@@ -14,6 +14,7 @@ interface FoodItemDAO {
     @Update
     fun update(item : FoodItem)
 
+    //Get a single food item from the DB based on the passed in value
     @Query("SELECT * from food_item_table f WHERE f.id = :id")
     fun getFoodItem(id : Int) : FoodItem
 
@@ -23,6 +24,7 @@ interface FoodItemDAO {
     @Query("DELETE from food_item_table")
     fun deleteAllFoodItems()
 
+    //Delete the item with the passed in i (can be retrieved by doing FoodItem.id)
     @Query("DELETE from food_item_table WHERE id = :id")
     fun deleteFoodItem(id : Int)
 
