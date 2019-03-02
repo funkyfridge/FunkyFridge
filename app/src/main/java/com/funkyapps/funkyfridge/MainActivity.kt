@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.funkyapps.funkyfridge.R
 import org.w3c.dom.Text
 import android.content.Intent
+import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +22,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-/*
+
+        val foodRepo : FoodItemRepository = FoodItemRepository(application)
+        var myDataset : List<FoodItem> = foodRepo.getAllFoodItems()
+
         viewManager = LinearLayoutManager(this)
         viewAdapter = MyAdapter(myDataset)
 
@@ -29,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
-*/
+
         val fab: View = findViewById(R.id.fab_new_item)
         fab.setOnClickListener {
             val intent = Intent(this, AddItem::class.java)
@@ -37,23 +41,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-/*
-class MyAdapter(private val myDataset: Array<String>) :
+
+class MyAdapter(private val myDataset: List<FoodItem>) :
         RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
-    class MyViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
+    class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+        var button : Button = itemView.findViewById(R.id.dropDownButton)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): MyAdapter.MyViewHolder {
 
-        // creates new view, inflated from my_text_view
-        // TODO: inflate all views of layout
-        val textView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.my_text_view, parent, false) as TextView
+        val dropdownView = LayoutInflater.from(parent.context)
+                .inflate(R.layout.dropdown_item, parent, false)
 
         //TODO: set view's size, margins, etc
 
-        return MyViewHolder(textView)
+        return MyViewHolder(dropdownView)
     }
 
     // Replace contents of view, invoked by layout manager
@@ -61,11 +65,10 @@ class MyAdapter(private val myDataset: Array<String>) :
         // TODO: get element from dataset
         // TODO: replace contents of view with element
 
-        holder.textView.text = myDataset[position]
+        holder.button.text = myDataset[holder.adapterPosition].itemName
     }
 
     // return size of dataset (invoked by layout manager)
     override fun getItemCount() = myDataset.size
-    }
+
 }
-*/
