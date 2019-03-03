@@ -123,7 +123,7 @@ class AddItem : AppCompatActivity() {
                             calories = response.getInt("nf_calories")
                             total_fat = response.getInt("nf_total_fat")
                             total_carbs = response.getInt("nf_total_carbohydrate")
-                            sugars = response.getInt("nf_suagrs")
+                            sugars = response.getInt("nf_sugars")
                             protein = response.getInt("nf_protein")
 
                         },
