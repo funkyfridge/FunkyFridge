@@ -16,9 +16,8 @@ class SearchDataBase {
     }
 
     companion object {
-        private val TAG = "MyActivity"
-        //Should return a string with the information
         @Throws(Exception::class)
+        //Should return a string with the product's information
         fun getHTML(urlToRead: String): String {
             val result = StringBuilder()
             val url = URL(urlToRead)
@@ -41,5 +40,3 @@ class SearchDataBase {
         }
     }
 }
-
-
