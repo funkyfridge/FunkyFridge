@@ -21,12 +21,13 @@ class AddItem : AppCompatActivity() {
             val editProdName = findViewById<EditText>(R.id.edit_item_name)
             val editExpirDate = findViewById<EditText>(R.id.edit_expiration_date)
 
-            // TODO: throw error msg
+            // TODO: throw error msg? Alert saying couldn't scan barcode
             if (prodUPCCode == "") {
 
             }
 
-            // TODO: add prodUPCCode to database
+            // TODO: add prodUPCCode to database with *editProdName.text* and Expiration Date
+            // TODO: Expiration date needs to be split out from the calendar view
         }
     }
     fun scanBarcode(view: View) {
