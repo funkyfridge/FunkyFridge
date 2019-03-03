@@ -3,7 +3,7 @@ package com.funkyapps.funkyfridge
 import org.json.JSONException
 import org.json.JSONObject
 
-class Search {
+class SearchDatabase {
     protected lateinit var json: JSONObject
 
     init {
