@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.EditText
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.vision.barcode.Barcode
+import org.json.JSONException
+import org.json.JSONObject
 
 class AddItem : AppCompatActivity() {
 
@@ -21,13 +23,29 @@ class AddItem : AppCompatActivity() {
             val editProdName = findViewById<EditText>(R.id.edit_item_name)
             val editExpirDate = findViewById<EditText>(R.id.edit_expiration_date)
 
-            // TODO: throw error msg? Alert saying couldn't scan barcode
+            // TODO: add alert saying to scan barcode
             if (prodUPCCode == "") {
 
             }
 
-            // TODO: add prodUPCCode to database with *editProdName.text* and Expiration Date
-            // TODO: Expiration date needs to be split out from the calendar view
+            lateinit var json: JSONObject
+
+            try {
+                var json = JSONObject("https://api.nutritionix.com/v1_1/item?upc=" +
+                        prodUPCCode + "&appId=359b6d3a&appKey=0f9a03a179334c56721fcf70cc8600b9")
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+
+            val calories = json.getInt("nf_calories")
+            val total_fat = json.getInt("nf_total_fat")
+            val total_carbs = json.getInt("nf_total_carbohydrate")
+            val sugars = json.getInt("nf_suagrs")
+            val protein = json.getInt("nf_protein")
+
+            // TODO: add these vals, editProdName.text and expiration date to DB
+
         }
     }
     fun scanBarcode(view: View) {
