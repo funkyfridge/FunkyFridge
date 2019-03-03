@@ -38,6 +38,9 @@ class AddItem : AppCompatActivity() {
                 e.printStackTrace()
             }
 
+            val prodName = json.getString("item_name")
+            editProdName.setText(prodName)
+
             val calories = json.getInt("nf_calories")
             val total_fat = json.getInt("nf_total_fat")
             val total_carbs = json.getInt("nf_total_carbohydrate")
