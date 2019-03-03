@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.ActionBar
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -39,6 +40,10 @@ class AddItem : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_item)
 
+        val actionBar : ActionBar? = supportActionBar
+
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+
         editProdName = findViewById(R.id.edit_item_name)
         editExpirDate = findViewById(R.id.expirationDateTextView)
         changeButton = findViewById(R.id.changeDateButton)
@@ -70,29 +75,41 @@ class AddItem : AppCompatActivity() {
         val fab: View = findViewById(R.id.fab_add)
         fab.setOnClickListener {
             val intent = Intent()
-            if(date.equals("")){
-                val c = Calendar.getInstance()
-                val formatter = SimpleDateFormat("yyyy-MM-dd")
-                currentDate = formatter.format(c.time)
-                intent.putExtra("date",currentDate)
-            }
-            else{
-                intent.putExtra("date",date)
-            }
+
             if(!editProdName.text.toString().equals("")){
                 prodName = editProdName.text.toString()
-            }
 
-            intent.putExtra("calories",calories)
-            intent.putExtra("fat",total_fat)
-            intent.putExtra("carbs",total_carbs)
-            intent.putExtra("sugars",sugars)
-            intent.putExtra("protein",protein)
-            intent.putExtra("name",prodName)
-            intent.putExtra("upc",prodUPCCode)
-            setResult(Activity.RESULT_OK,intent)
-            finish()
+                if(date.equals("")){
+                    val c = Calendar.getInstance()
+                    val formatter = SimpleDateFormat("yyyy-MM-dd")
+                    currentDate = formatter.format(c.time)
+                    intent.putExtra("date",currentDate)
+                }
+                else{
+                    intent.putExtra("date",date)
+                }
+
+                intent.putExtra("calories",calories)
+                intent.putExtra("fat",total_fat)
+                intent.putExtra("carbs",total_carbs)
+                intent.putExtra("sugars",sugars)
+                intent.putExtra("protein",protein)
+                intent.putExtra("name",prodName)
+                intent.putExtra("upc",prodUPCCode)
+                setResult(Activity.RESULT_OK,intent)
+                finish()
+            }
+            else{
+                Toast.makeText(this,"Your product needs a name.",Toast.LENGTH_SHORT).show()
+
+            }
         }
+    }
+
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     fun scanBarcode(view: View) {
@@ -117,7 +134,8 @@ class AddItem : AppCompatActivity() {
                         Response.Listener { response ->
 
                             // manage object
-                            prodName = response.getString("item_name")
+                            prodName = response.getString("brand_name")
+                            prodName += ": " + response.getString("item_name")
                             editProdName.setText(prodName)
 
                             calories = response.getInt("nf_calories")
@@ -128,7 +146,7 @@ class AddItem : AppCompatActivity() {
 
                         },
                         Response.ErrorListener { error ->
-                            Toast.makeText(this,"Barcode not recognized, sorry",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this,"Barcode not recognized, sorry",Toast.LENGTH_LONG).show()
                         }
                     )
                     queue.add(jsonObjectRequest)

@@ -43,17 +43,18 @@
                 android:layout_marginStart="200dp" android:layout_marginTop="24dp"
                 app:layout_constraintTop_toBottomOf="@+id/carbsText" android:textAlignment="textStart"
                 android:textColor="@android:color/black" android:textSize="16sp" android:fontFamily="serif"
-                android:visibility="gone"/>
+                android:visibility="gone" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
         <TextView
                 android:text="TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/proteinText"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="16dp" android:layout_marginTop="24dp"
-                app:layout_constraintTop_toBottomOf="@+id/dropdownTextview" android:textAlignment="textStart"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/caloriesText" android:textAlignment="textStart"
                 android:textColor="@android:color/black" android:textSize="16sp" android:fontFamily="serif"
-                android:visibility="gone"/>
+                android:visibility="gone" android:layout_marginTop="24dp"/>
         <TextView
                 android:text="TextView"
                 android:layout_width="wrap_content"
@@ -62,16 +63,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/proteinText" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp" android:textAlignment="textStart"
                 android:textColor="@android:color/black" android:textSize="16sp" android:fontFamily="serif"
-                android:visibility="gone"/>
+                android:visibility="gone" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
         <TextView
                 android:text="TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/caloriesText" android:layout_marginTop="24dp"
-                app:layout_constraintTop_toBottomOf="@+id/sugarsText" app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/caloriesText"
+                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp" android:textAlignment="textStart"
                 android:textColor="@android:color/black" android:textSize="16sp" android:fontFamily="serif"
-                android:visibility="gone" android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                android:visibility="gone"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/dropdownTextview"/>
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

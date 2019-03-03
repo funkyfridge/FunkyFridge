@@ -15,6 +15,7 @@ import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.ActionBar
 import android.widget.Toast
 
 
@@ -27,8 +28,18 @@ class ScanBarcode : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_barcode)
+
+        val actionBar : ActionBar? = supportActionBar
+
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+
         cameraPreview = findViewById<SurfaceView>(R.id.camera_preview)
         createCameraSource()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     fun createCameraSource() {

@@ -179,7 +179,7 @@ class MyAdapter(private val myDataset: MutableList<FoodItem>, val context : Cont
             holder.carbText.text = if(myDataset[holder.adapterPosition-1].carbs<0) "Carbs: Unknown" else "Carbs: " + myDataset[holder.adapterPosition-1].carbs + "g"
             holder.sugarText.text = if(myDataset[holder.adapterPosition-1].sugars<0) "Sugars: Unknown" else "Sugars: " + myDataset[holder.adapterPosition-1].sugars + "g"
             holder.fatText.text =  if(myDataset[holder.adapterPosition-1].fats<0) "Fats: Unknown" else "Fats: " + myDataset[holder.adapterPosition-1].fats + "g"
-            holder.caloriesText.text = if(myDataset[holder.adapterPosition-1].calories<0) "Calories: Unknown" else "Calories: " + myDataset[holder.adapterPosition-1].calories + "g"
+            holder.caloriesText.text = if(myDataset[holder.adapterPosition-1].calories<0) "Calories: Unknown" else "Calories: " + myDataset[holder.adapterPosition-1].calories
         }
 
         holder.textView.text = buttonText
@@ -196,7 +196,7 @@ class MyAdapter(private val myDataset: MutableList<FoodItem>, val context : Cont
                 holder.carbText.text = if(myDataset[holder.adapterPosition-1].carbs<0) "Carbs: Unknown" else "Carbs: " + myDataset[holder.adapterPosition-1].carbs + "g"
                 holder.sugarText.text = if(myDataset[holder.adapterPosition-1].sugars<0) "Sugars: Unknown" else "Sugars: " + myDataset[holder.adapterPosition-1].sugars + "g"
                 holder.fatText.text =  if(myDataset[holder.adapterPosition-1].fats<0) "Fats: Unknown" else "Fats: " + myDataset[holder.adapterPosition-1].fats + "g"
-                holder.caloriesText.text = if(myDataset[holder.adapterPosition-1].calories<0) "Calories: Unknown" else "Calories: " + myDataset[holder.adapterPosition-1].calories + "g"
+                holder.caloriesText.text = if(myDataset[holder.adapterPosition-1].calories<0) "Calories: Unknown" else "Calories: " + myDataset[holder.adapterPosition-1].calories
             }
             else{
                 if(isExpanded.size > 0)

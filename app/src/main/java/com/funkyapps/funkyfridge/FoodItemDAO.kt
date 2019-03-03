@@ -18,7 +18,7 @@ interface FoodItemDAO {
     @Query("SELECT * from food_item_table f WHERE f.id = :id")
     fun getFoodItem(id : Int) : FoodItem
 
-    @Query("SELECT * from food_item_table")
+    @Query("SELECT * from food_item_table ORDER BY Date(expDate)")
     fun getAllFoodItems() : MutableList<FoodItem>
 
     @Query("DELETE from food_item_table")
