@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.google.android.gms.common.api.CommonStatusCodes
@@ -124,10 +125,9 @@ class AddItem : AppCompatActivity() {
                             sugars = response.getInt("nf_suagrs")
                             protein = response.getInt("nf_protein")
 
-                            // TODO: Add 5 macros, prodName and Expiration date to DB
                         },
                         Response.ErrorListener { error ->
-                            // TODO: Handle error
+                            Toast.makeText(this,"Barcode not recognized, sorry",Toast.LENGTH_SHORT).show()
                         }
                     )
                     queue.add(jsonObjectRequest)
