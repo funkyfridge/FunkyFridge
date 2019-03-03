@@ -10,7 +10,7 @@ import com.google.android.gms.vision.barcode.Barcode
 
 class AddItem : AppCompatActivity() {
 
-    var prodUPCCode = 0
+    var prodUPCCode = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +22,7 @@ class AddItem : AppCompatActivity() {
             val editExpirDate = findViewById<EditText>(R.id.edit_expiration_date)
 
             // TODO: throw error msg
-            if (prodUPCCode == 0) {
+            if (prodUPCCode == "") {
 
             }
 
@@ -39,10 +39,10 @@ class AddItem : AppCompatActivity() {
             if (resultCode == CommonStatusCodes.SUCCESS) {
                 if (data != null) {
                     val barcode = data.getParcelableExtra<Barcode>("barcode")
-                    prodUPCCode = barcode.displayValue.toInt()
+                    prodUPCCode = barcode.displayValue
                 }
                 else {
-                    prodUPCCode = 0
+                    prodUPCCode = ""
                 }
             }
         }
