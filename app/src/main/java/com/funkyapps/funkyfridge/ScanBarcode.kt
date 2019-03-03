@@ -41,6 +41,7 @@ class ScanBarcode : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_barcode)
         cameraPreview = findViewById<SurfaceView>(R.id.camera_preview)
+        createCameraSource()
     }
 
     fun createCameraSource() {
@@ -52,39 +53,21 @@ class ScanBarcode : AppCompatActivity() {
 
         cameraPreview.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
-                if (ContextCompat.checkSelfPermission(
+                if (ActivityCompat.checkSelfPermission(
                         this@ScanBarcode,
                         Manifest.permission.CAMERA
                     ) != PackageManager.PERMISSION_GRANTED) {
 
-                    if (getFromPref(this@ScanBarcode, ALLOW_KEY)) {
-                        showSettingsAlert()
-                    }
-                    else if (ContextCompat.checkSelfPermission(
-                            this@ScanBarcode,
-                            Manifest.permission.CAMERA)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                                this@ScanBarcode,
-                                Manifest.permission.CAMERA)) {
-                            showAlert()
-                        }
-                        else {
-                            ActivityCompat.requestPermissions(
-                                this@ScanBarcode,
-                                Array(1, {"Manifest.permission.CAMERA"}),
-                                MY_PERMISSIONS_REQUEST_CAMERA);
-                        }
-                    }
+                    return
                 }
-                else {
-                    openCamera()
+                try {
+                    cameraSource.start(cameraPreview.holder)
+                } catch (e: IOException) {
+                    e.printStackTrace()
                 }
             }
 
-            override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
-
-            }
+            override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {}
 
             override fun surfaceDestroyed(holder: SurfaceHolder) {
                 cameraSource.stop()
@@ -104,69 +87,5 @@ class ScanBarcode : AppCompatActivity() {
                 }
             }
         })
-    }
-
-    private fun showAlert() {
-        val alertDialog = AlertDialog.Builder(this).create()
-        alertDialog.setTitle("Alert")
-        alertDialog.setMessage("App needs to access the Camera.")
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "DONT ALLOW")
-        { dialog, which ->
-            dialog.dismiss()
-            finish()
-        }
-
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "ALLOW",
-            object:DialogInterface.OnClickListener {
-                override fun onClick(dialog:DialogInterface, which:Int) {
-                    dialog.dismiss()
-                    ActivityCompat.requestPermissions(this@ScanBarcode,
-                        arrayOf(Manifest.permission.CAMERA),
-                        MY_PERMISSIONS_REQUEST_CAMERA)
-                }
-            })
-
-        alertDialog.show()
-    }
-
-    fun getFromPref(context: Context, key: String): Boolean {
-        val myPrefs = context.getSharedPreferences(CAMERA_PREF, Context.MODE_PRIVATE)
-        return myPrefs.getBoolean(key, false)
-    }
-
-    private fun showSettingsAlert() {
-        val alertDialog = AlertDialog.Builder(this).create()
-        alertDialog.setTitle("Alert")
-        alertDialog.setMessage("App needs to access the Camera.")
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "DONT ALLOW",
-            DialogInterface.OnClickListener { dialog, which ->
-                dialog.dismiss()
-                //finish();
-            })
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "SETTINGS",
-            DialogInterface.OnClickListener { dialog, which ->
-                dialog.dismiss()
-                startInstalledAppDetailsActivity(this@ScanBarcode)
-            })
-        alertDialog.show()
-    }
-
-    fun startInstalledAppDetailsActivity(context: Activity?) {
-        if (context == null) {
-            return
-        }
-        val i = Intent()
-        i.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-        i.addCategory(Intent.CATEGORY_DEFAULT)
-        i.data = Uri.parse("package:" + context.packageName)
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
-        i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-        context.startActivity(i)
-    }
-
-    private fun openCamera() {
-        val intent = Intent("android.media.action.IMAGE_CAPTURE")
-        startActivity(intent)
     }
 }
