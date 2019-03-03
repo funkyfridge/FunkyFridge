@@ -6,4 +6,6 @@
     <string name="edit_name">Edit Name</string>
     <string name="edit_date">Edit Expiration Date</string>
     <string name="delete">Delete</string>
+    <string name="sample_item">sample item</string>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.funkyapps.funkyfridge
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
@@ -29,15 +30,18 @@ import java.text.SimpleDateFormat
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewAdapter: MyAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
+    val addRequestCode : Int = 1
+    lateinit var foodRepo : FoodItemRepository
+    lateinit var myDataset : MutableList<FoodItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val foodRepo : FoodItemRepository = FoodItemRepository(application)
-        var myDataset : MutableList<FoodItem> = foodRepo.getAllFoodItems()
+        foodRepo = FoodItemRepository(application)
+        myDataset = foodRepo.getAllFoodItems()
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = MyAdapter(myDataset,this, foodRepo)
@@ -50,7 +54,23 @@ class MainActivity : AppCompatActivity() {
         val fab: View = findViewById(R.id.fab_new_item)
         fab.setOnClickListener {
             val intent = Intent(this, AddItem::class.java)
-            startActivity(intent)
+            startActivityForResult(intent,addRequestCode)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == addRequestCode && resultCode == Activity.RESULT_OK) {
+            val prodUPCCode : String = data!!.getStringExtra("upc")
+            val calories : Int = data?.getIntExtra("calories",-1) as Int
+            val total_fat : Int = data?.getIntExtra("fat",-1)
+            val total_carbs : Int = data?.getIntExtra("carbs",-1)
+            val sugars : Int = data?.getIntExtra("sugars",-1)
+            val protein : Int = data?.getIntExtra("protein",-1)
+            val prodName : String = data.getStringExtra("name")
+            //val expDate : String = data.getStringExtra("expDate")
+            val foodItem : FoodItem = FoodItem(prodName,prodName,prodUPCCode,"3333-33-33",total_carbs,protein,sugars,total_fat,calories)
+            foodRepo.insert(foodItem)
+            viewAdapter.insert(foodItem)
         }
     }
 }
@@ -90,6 +110,12 @@ class MyAdapter(private val myDataset: MutableList<FoodItem>, val context : Cont
             0
         else
             1
+    }
+
+    public fun update(item : FoodItem){
+        myDataset.add(item)
+        isExpanded.add(false)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup,
