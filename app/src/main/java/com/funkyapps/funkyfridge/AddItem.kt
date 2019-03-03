@@ -5,10 +5,15 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import com.android.volley.Request
+import com.android.volley.Response
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.vision.barcode.Barcode
 import org.json.JSONException
 import org.json.JSONObject
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+
 
 class AddItem : AppCompatActivity() {
 
@@ -28,29 +33,32 @@ class AddItem : AppCompatActivity() {
 
             }
 
-            lateinit var json: JSONObject
+            val queue = Volley.newRequestQueue(this)
+            val url = "http://my-json-feed"
 
-            try {
-                var json = JSONObject("https://api.nutritionix.com/v1_1/item?upc=" +
-                        prodUPCCode + "&appId=359b6d3a&appKey=0f9a03a179334c56721fcf70cc8600b9")
+            val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
+                Response.Listener { response ->
+                    // manage object
+                    val prodName = response.getString("item_name")
+                    editProdName.setText(prodName)
 
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
+                    val calories = response.getInt("nf_calories")
+                    val total_fat = response.getInt("nf_total_fat")
+                    val total_carbs = response.getInt("nf_total_carbohydrate")
+                    val sugars = response.getInt("nf_suagrs")
+                    val protein = response.getInt("nf_protein")
 
-            val prodName = json.getString("item_name")
-            editProdName.setText(prodName)
-
-            val calories = json.getInt("nf_calories")
-            val total_fat = json.getInt("nf_total_fat")
-            val total_carbs = json.getInt("nf_total_carbohydrate")
-            val sugars = json.getInt("nf_suagrs")
-            val protein = json.getInt("nf_protein")
-
-            // TODO: add these vals, editProdName.text and expiration date to DB
+                    // Add 5 macros, prodName and Expiration date to DB
+                },
+                Response.ErrorListener { error ->
+                    // TODO: Handle error
+                }
+            )
+            queue.add(jsonObjectRequest)
 
         }
     }
+
     fun scanBarcode(view: View) {
         val intent = Intent(this, ScanBarcode::class.java)
         startActivityForResult(intent, 0)
