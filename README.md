@@ -2,7 +2,7 @@
 Welcome to FunkyFridge! The Android Mobile solution for using your food before it goes bad!
 
 ## Inspiration
-Every year, [**$680 billion worth of food is wasted**] (http://www.fao.org/save-food/resources/keyfindings/en/) in industrialized countries. Funky Fridge was started with the goal of helping users minimize their food waste and make the most of their groceries. With so much food in a fridge, it's hard to keep track of which items will soon go bad. By providing users with notifications about which items will soon expire, they can prioritize those ingredients and use their food before their money goes in the trash can. 
+Every year, [**$680 billion worth of food is wasted**](http://www.fao.org/save-food/resources/keyfindings/en/) in industrialized countries. Funky Fridge was started with the goal of helping users minimize their food waste and make the most of their groceries. With so much food in a fridge, it's hard to keep track of which items will soon go bad. By providing users with notifications about which items will soon expire, they can prioritize those ingredients and use their food before their money goes in the trash can. 
 
 ## What it does
 Funky Fridge will keep a running log of all of your perishable food items. Simply scan the food item's barcode and tell us its expiration date, and you're all set! Funky Fridge will have you covered.
@@ -11,7 +11,7 @@ Along with the expiration date, Funky Fridge will tell you important nutritional
 ## How we built it
 The app was developed in Android Studio in Kotlin.
 
-We used barcode detection from [**Google's Mobile Vision API**] (https://developers.google.com/vision/) to convert the image of the barcode into its corresponding Universal Product Code (UPC). From here, we sent off the UPC to [**Nutritionix's food database API**](https://developer.nutritionix.com/v1_1/quick-start/upc-scan) to receive the nutritional data of the food item. The nutritional information along with user-inputted values for expiration dates was stored in an **SQLite database**. Each time a user created a new food item to add to the app, we created a new card for them in the recycle list view.
+We used barcode detection from [**Google's Mobile Vision API**](https://developers.google.com/vision/) to convert the image of the barcode into its corresponding Universal Product Code (UPC). From here, we sent off the UPC to [**Nutritionix's food database API**](https://developer.nutritionix.com/v1_1/quick-start/upc-scan) to receive the nutritional data of the food item. The nutritional information along with user-inputted values for expiration dates was stored in an [**SQLite database**](https://www.sqlite.org/index.html). Each time a user created a new food item to add to the app, we created a new card for them in the recycle list view.
 
 ## Challenges we ran into
 We had issues making the barcode detection API from Google to work. The button to launch the camera led to a black screen. Getting the permissions to work took a bit of time. We ran into trouble with the UI, specifically making it pleasing to look at and easy to interact with. Due to lack of time and general inexperience with Android Studio, we were not able to implement some of our desired features. 
