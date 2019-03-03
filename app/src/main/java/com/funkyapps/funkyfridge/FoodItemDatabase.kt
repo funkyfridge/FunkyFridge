@@ -48,12 +48,11 @@ public abstract class FoodItemDatabase : RoomDatabase() {
                 }
             }
             fun populateDatabase(fItemDAO: FoodItemDAO) {
-                fItemDAO.deleteAllFoodItems()
-
-                var foodItem = FoodItem("Milk", "Milk 1", "11111111", "2019-03-02",1,1,1,1,1)
-                fItemDAO.insert(foodItem)
-                foodItem = FoodItem("Milk", "Milk 2", "1111111", "2019-03-10",1,1,1,1,1)
-                fItemDAO.insert(foodItem)
+                if(fItemDAO.numEntries()<=0){
+                    fItemDAO.deleteAllFoodItems()
+                    val foodItem = FoodItem("Milk", "Milk", "11111111", "2019-05-02",1,1,1,1,1)
+                    fItemDAO.insert(foodItem)
+                }
             }
         }
     }
