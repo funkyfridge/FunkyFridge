@@ -35,5 +35,6 @@ Also, we learned a lot about Android's Recycler and how it can be used to dynami
 ## What's next for Funky Fridge
 We would like to implement the following features for Funky Fridge in the future:
 * Search capability
+* Organize by category (dairy, produce, etc.)
 * Favorites (simply add starred item to fridge rather than scanning barcode)
 * Better UI/user experience with animations
