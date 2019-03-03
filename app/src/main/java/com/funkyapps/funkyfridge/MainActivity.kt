@@ -14,8 +14,10 @@ import android.view.ViewGroup
 import com.funkyapps.funkyfridge.R
 import org.w3c.dom.Text
 import android.content.Intent
+import android.graphics.Color
 import android.opengl.Visibility
 import android.support.constraint.ConstraintLayout
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.view.menu.MenuView
 import android.view.MenuItem
 import android.widget.*
@@ -112,12 +114,34 @@ class MyAdapter(private val myDataset: MutableList<FoodItem>, val context : Cont
             holder = bigHolder as ItemViewHolder
         else
             return
+        //Gets date from text
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val convertedDate = sdf.parse(myDataset[holder.adapterPosition-1].expDate)
+        //Gets current date
+        val currentDate : Date = Calendar.getInstance().time
+        //Gets date a week from now
+        val calendar : Calendar = Calendar.getInstance()
+        calendar.isLenient = true
+        calendar.set(Calendar.DAY_OF_YEAR,calendar.get(Calendar.DAY_OF_YEAR)+7)
+        val weekFromNow : Date = calendar.time
 
         var buttonText : String = myDataset[holder.adapterPosition-1].itemName
         var date : String = myDataset[holder.adapterPosition-1].expDate.substring(5,7) + "/" +
                 myDataset[holder.adapterPosition-1].expDate.substring(8,10) + "/" + myDataset[holder.adapterPosition-1].expDate.substring(0,4)
 
-        buttonText += " (expires on " + date + ")"
+
+        if(currentDate.after(convertedDate) || currentDate.equals(convertedDate)) {
+            buttonText += " (expired on " + date + ")"
+            holder.textView.setTextColor(Color.RED)
+        }
+        else if(weekFromNow.after(convertedDate) || weekFromNow.after(convertedDate)){
+            buttonText += " (expires soon on " + date + ")"
+            holder.textView.setTextColor(ResourcesCompat.getColor(context.resources,R.color.darkOrange,null))
+        }
+        else {
+            buttonText += " (expires on " + date + ")"
+            holder.textView.setTextColor(Color.BLACK)
+        }
 
         if(isExpanded.size > 0 && isExpanded[holder.adapterPosition-1]){
             holder.proteinText.visibility = View.VISIBLE
@@ -125,11 +149,11 @@ class MyAdapter(private val myDataset: MutableList<FoodItem>, val context : Cont
             holder.carbText.visibility = View.VISIBLE
             holder.fatText.visibility = View.VISIBLE
             holder.caloriesText.visibility = View.VISIBLE
-            holder.proteinText.text = "Proteins: " + myDataset[holder.adapterPosition-1].proteins
-            holder.carbText.text = "Carbs: " + myDataset[holder.adapterPosition-1].carbs
-            holder.sugarText.text = "Sugars: " + myDataset[holder.adapterPosition-1].sugars
-            holder.fatText.text = "Fats: " + myDataset[holder.adapterPosition-1].fats
-            holder.caloriesText.text = "Calories: " + myDataset[holder.adapterPosition-1].calories
+            holder.proteinText.text = if(myDataset[holder.adapterPosition-1].proteins<0) "Proteins: Unknown" else "Proteins: " + myDataset[holder.adapterPosition-1].proteins + "g"
+            holder.carbText.text = if(myDataset[holder.adapterPosition-1].carbs<0) "Carbs: Unknown" else "Carbs: " + myDataset[holder.adapterPosition-1].carbs + "g"
+            holder.sugarText.text = if(myDataset[holder.adapterPosition-1].sugars<0) "Sugars: Unknown" else "Sugars: " + myDataset[holder.adapterPosition-1].sugars + "g"
+            holder.fatText.text =  if(myDataset[holder.adapterPosition-1].fats<0) "Fats: Unknown" else "Fats: " + myDataset[holder.adapterPosition-1].fats + "g"
+            holder.caloriesText.text = if(myDataset[holder.adapterPosition-1].calories<0) "Calories: Unknown" else "Calories: " + myDataset[holder.adapterPosition-1].calories + "g"
         }
 
         holder.textView.text = buttonText
@@ -142,11 +166,11 @@ class MyAdapter(private val myDataset: MutableList<FoodItem>, val context : Cont
                 holder.carbText.visibility = View.VISIBLE
                 holder.fatText.visibility = View.VISIBLE
                 holder.caloriesText.visibility = View.VISIBLE
-                holder.proteinText.text = "Proteins: " + myDataset[holder.adapterPosition-1].proteins
-                holder.carbText.text = "Carbs: " + myDataset[holder.adapterPosition-1].carbs
-                holder.sugarText.text = "Sugars: " + myDataset[holder.adapterPosition-1].sugars
-                holder.fatText.text = "Fats: " + myDataset[holder.adapterPosition-1].fats
-                holder.caloriesText.text = "Calories: " + myDataset[holder.adapterPosition-1].calories
+                holder.proteinText.text = if(myDataset[holder.adapterPosition-1].proteins<0) "Proteins: Unknown" else "Proteins: " + myDataset[holder.adapterPosition-1].proteins + "g"
+                holder.carbText.text = if(myDataset[holder.adapterPosition-1].carbs<0) "Carbs: Unknown" else "Carbs: " + myDataset[holder.adapterPosition-1].carbs + "g"
+                holder.sugarText.text = if(myDataset[holder.adapterPosition-1].sugars<0) "Sugars: Unknown" else "Sugars: " + myDataset[holder.adapterPosition-1].sugars + "g"
+                holder.fatText.text =  if(myDataset[holder.adapterPosition-1].fats<0) "Fats: Unknown" else "Fats: " + myDataset[holder.adapterPosition-1].fats + "g"
+                holder.caloriesText.text = if(myDataset[holder.adapterPosition-1].calories<0) "Calories: Unknown" else "Calories: " + myDataset[holder.adapterPosition-1].calories + "g"
             }
             else{
                 if(isExpanded.size > 0)
@@ -228,6 +252,12 @@ class MyAdapter(private val myDataset: MutableList<FoodItem>, val context : Cont
             popup.show()
             true
         })
+    }
+
+    fun insert(food : FoodItem){
+        myDataset.add(food)
+        isExpanded.add(false)
+        notifyDataSetChanged()
     }
 
     // return size of dataset (invoked by layout manager)

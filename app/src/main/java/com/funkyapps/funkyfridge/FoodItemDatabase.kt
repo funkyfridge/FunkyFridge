@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.sql.Date
 
-@Database(entities = arrayOf(FoodItem::class),version = 2)
+@Database(entities = arrayOf(FoodItem::class),version = 3)
 public abstract class FoodItemDatabase : RoomDatabase() {
     abstract fun fItemDAO() : FoodItemDAO
 
@@ -50,9 +50,9 @@ public abstract class FoodItemDatabase : RoomDatabase() {
             fun populateDatabase(fItemDAO: FoodItemDAO) {
                 fItemDAO.deleteAllFoodItems()
 
-                var foodItem = FoodItem("Milk", "Milk 1", 1, "2019-03-02",1,1,1,1,1)
+                var foodItem = FoodItem("Milk", "Milk 1", "11111111", "2019-03-02",1,1,1,1,1)
                 fItemDAO.insert(foodItem)
-                foodItem = FoodItem("Milk", "Milk 2", 1, "2019-03-10",1,1,1,1,1)
+                foodItem = FoodItem("Milk", "Milk 2", "1111111", "2019-03-10",1,1,1,1,1)
                 fItemDAO.insert(foodItem)
             }
         }

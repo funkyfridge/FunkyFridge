@@ -11,13 +11,13 @@ import java.sql.Date
 data class FoodItem(
     @ColumnInfo(name = "product") var product : String = String(),
     @ColumnInfo(name = "itemName") var itemName : String = String(),
-    @ColumnInfo(name = "UPCid") var UPCid : Int,
+    @ColumnInfo(name = "UPCid") var UPCid : String = String(),
     @ColumnInfo(name = "expDate") var expDate : String,
-    @ColumnInfo(name = "carbs") var carbs : Int,
-    @ColumnInfo(name = "proteins") var proteins : Int,
-    @ColumnInfo(name = "sugars") var sugars : Int,
-    @ColumnInfo(name = "fats") var fats : Int,
-    @ColumnInfo(name = "calories") var calories : Int
+    @ColumnInfo(name = "carbs") var carbs : Int = -1,
+    @ColumnInfo(name = "proteins") var proteins : Int = -1,
+    @ColumnInfo(name = "sugars") var sugars : Int = -1,
+    @ColumnInfo(name = "fats") var fats : Int = -1,
+    @ColumnInfo(name = "calories") var calories : Int = -1
     ){
     //Auto Generate the integer key id
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id")
