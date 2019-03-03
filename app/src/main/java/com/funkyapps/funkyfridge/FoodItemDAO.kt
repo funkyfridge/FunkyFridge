@@ -24,6 +24,9 @@ interface FoodItemDAO {
     @Query("DELETE from food_item_table")
     fun deleteAllFoodItems()
 
+    @Query("SELECT COUNT(*) from food_item_table")
+    fun numEntries() : Int
+
     //Delete the item with the passed in i (can be retrieved by doing FoodItem.id)
     @Query("DELETE from food_item_table WHERE id = :id")
     fun deleteFoodItem(id : Int)

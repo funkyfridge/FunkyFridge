@@ -67,8 +67,8 @@ class MainActivity : AppCompatActivity() {
             val sugars : Int = data?.getIntExtra("sugars",-1)
             val protein : Int = data?.getIntExtra("protein",-1)
             val prodName : String = data.getStringExtra("name")
-            //val expDate : String = data.getStringExtra("expDate")
-            val foodItem : FoodItem = FoodItem(prodName,prodName,prodUPCCode,"3333-33-33",total_carbs,protein,sugars,total_fat,calories)
+            val expDate : String = data.getStringExtra("date")
+            val foodItem : FoodItem = FoodItem(prodName,prodName,prodUPCCode,expDate,total_carbs,protein,sugars,total_fat,calories)
             foodRepo.insert(foodItem)
             viewAdapter.insert(foodItem)
         }

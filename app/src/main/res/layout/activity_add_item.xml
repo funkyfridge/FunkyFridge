@@ -17,17 +17,6 @@
             android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:hint="@string/item_name"
             android:contentDescription="@string/item_name"/>
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="date"
-            android:ems="10"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/edit_expiration_date"
-            android:layout_marginEnd="8dp" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/edit_item_name" android:layout_marginStart="8dp"
-            android:contentDescription="@string/expiration_date" app:layout_constraintHorizontal_bias="0.503"
-            android:hint="@string/expiration_date"/>
     <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,11 +26,27 @@
             android:id="@+id/fab_add" android:focusable="true"/>
     <Button
             android:text="@string/barcode_scan"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:id="@+id/button_barcode_scan"
             android:onClick="scanBarcode"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/edit_expiration_date"
+            android:background="@drawable/button_background" android:layout_marginBottom="372dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/edit_item_name"/>
+    <TextView
+            android:text="Expires: Today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/expirationDateTextView" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="70dp" app:layout_constraintTop_toBottomOf="@+id/button_barcode_scan"
+            android:textSize="18sp" android:textColor="@android:color/black"/>
+    <Button
+            android:text="Change Expiration Date"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/changeDateButton" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/expirationDateTextView"
             android:background="@drawable/button_background"/>
 </android.support.constraint.ConstraintLayout>
