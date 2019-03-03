@@ -29,13 +29,13 @@ class AddItem : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_item)
-        editProdName = findViewById<EditText>(R.id.edit_item_name)
-        editExpirDate = findViewById<EditText>(R.id.edit_expiration_date)
+        editProdName = findViewById(R.id.edit_item_name)
+        editExpirDate = findViewById(R.id.edit_expiration_date)
 
         val fab: View = findViewById(R.id.fab_add)
         fab.setOnClickListener {
 
-            val intent : Intent = Intent()
+            val intent = Intent()
             intent.putExtra("calories",calories)
             intent.putExtra("fat",total_fat)
             intent.putExtra("carbs",total_carbs)
