@@ -108,7 +108,8 @@ class AddItem : AppCompatActivity() {
                     lateinit var json: JSONObject
 
                     val queue = Volley.newRequestQueue(this)
-                    val url = "http://my-json-feed"
+                    val url = "http://api.nutritionix.com/v1_1/item?upc=" +
+                        prodUPCCode + "&appId=359b6d3a&appKey=0f9a03a179334c56721fcf70cc8600b9"
 
                     val jsonObjectRequest = JsonObjectRequest(
                         Request.Method.GET, url, null,
