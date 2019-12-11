@@ -1,5 +1,5 @@
 # FunkyFridge
-Welcome to FunkyFridge! The Android Mobile solution for using your food before it goes bad!
+Welcome to FunkyFridge! The Android Mobile solution for using your food before it goes bad! Made during the Knight Hacks March 2019 Code Jam.
 
 
 ## Inspiration
